@@ -24,6 +24,26 @@ namespace GerenciaTaller.Models
 			this.precio = _precio;
 		}
 
+		public int GetCodigo()
+		{
+			return codigo;
+		}
+
+		public string GetNombre()
+		{
+			return nombre;
+		}
+
+		public string GetDescripcion()
+		{
+			return descripcion;
+		}
+
+		public int GetPrecio()
+		{
+			return precio;
+		}
+
 		public bool AgregarDataBase()
 		{
 			DataBase.Query dataBase = new DataBase.Query();

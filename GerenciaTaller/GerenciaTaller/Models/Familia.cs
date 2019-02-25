@@ -20,9 +20,14 @@ namespace GerenciaTaller.Models
 			this.descripcion = _descripcion;
 		}
 
-		public String GetNombre()
+		public string GetNombre()
 		{
 			return this.nombre;
+		}
+
+		public string GetDescripcion()
+		{
+			return descripcion;
 		}
 
 		public bool AgregarDataBase()
