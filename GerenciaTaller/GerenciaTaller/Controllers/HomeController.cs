@@ -11,14 +11,8 @@ namespace GerenciaTaller.Controllers
 	{
 		public ActionResult Index()
 		{
-			Producto producto = new Producto();
-			List<Producto> list = producto.ConsultarDataBase();
-			Categoria categoria = new Categoria();
-			List<Categoria> listCat = categoria.ConsultarDataBase();
-			Servicio servicio = new Servicio();
-			List<Servicio> listSer = servicio.ConsultarDataBase();
-			Familia familia = new Familia();
-			List<Familia> listFa = familia.ConsultarDataBase();
+			Producto p = new Producto(-1, "Producto 4", "Descripcion 4", 1000, new Categoria("Categoria 1"), false);
+			bool s = p.AgregarDataBase(50);
 			int a = 0;
 			return View();	
 		}

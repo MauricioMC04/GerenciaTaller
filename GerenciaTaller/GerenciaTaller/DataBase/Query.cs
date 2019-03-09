@@ -29,7 +29,7 @@ namespace GerenciaTaller.DataBase
 				MySqlDataReader myReader = commandDatabase.ExecuteReader();
 				databaseConnection.Close();
 			}
-			catch (Exception ex)
+			catch (MySqlException ex)
 			{
 				databaseConnection.Close();
 				return false;
@@ -53,7 +53,7 @@ namespace GerenciaTaller.DataBase
 					{
 						while (reader.Read())
 						{
-							lista.Add(new Producto(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetInt32(3), new Categoria(reader.GetString(4))));
+							lista.Add(new Producto(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetInt32(3), new Categoria(reader.GetString(4)), reader.GetBoolean(5)));
 						}
 					}
 				}
@@ -82,7 +82,7 @@ namespace GerenciaTaller.DataBase
 					{
 						while (reader.Read())
 						{
-							lista.Add(new Servicio(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetInt32(3)));
+							lista.Add(new Servicio(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetInt32(3), reader.GetBoolean(4)));
 						}
 					}
 				}
@@ -111,7 +111,7 @@ namespace GerenciaTaller.DataBase
 					{
 						while (reader.Read())
 						{
-							lista.Add(new Categoria(reader.GetString(0), reader.GetString(1), new Familia(reader.GetString(2))));
+							lista.Add(new Categoria(reader.GetString(0), reader.GetString(1), new Familia(reader.GetString(2)), reader.GetBoolean(3)));
 						}
 					}
 				}
@@ -139,7 +139,7 @@ namespace GerenciaTaller.DataBase
 					{
 						while (reader.Read())
 						{
-							lista.Add(new Familia(reader.GetString(0), reader.GetString(1)));
+							lista.Add(new Familia(reader.GetString(0), reader.GetString(1), reader.GetBoolean(2)));
 						}
 					}
 				}
@@ -150,6 +150,75 @@ namespace GerenciaTaller.DataBase
 				databaseConnection.Close();
 			}
 			return lista;
+		}
+
+		public int GetMayor(string columna, string tabla)
+		{
+			string select = "select ifnull(max(" + columna + "), 0) from " + tabla;
+			MySqlConnection databaseConnection = new MySqlConnection(connectionString);
+			MySqlCommand commandDatabase = new MySqlCommand(select, databaseConnection);
+			commandDatabase.CommandTimeout = timeOut;
+			int mayor = -1;
+			try
+			{
+				databaseConnection.Open();
+				MySqlDataReader reader = commandDatabase.ExecuteReader();
+				if (reader != null)
+				{
+					if (reader.HasRows)
+					{
+						while (reader.Read())
+						{
+							mayor = reader.GetInt32(0);
+						}
+					}
+				}
+				databaseConnection.Close();
+			}
+			catch (Exception ex)
+			{
+				databaseConnection.Close();
+			}
+			return mayor;			
+		}
+
+		public bool Eliminar(string tabla, string columna, string valor)
+		{
+			MySqlConnection databaseConnection = new MySqlConnection(connectionString);
+			string update = "update " + tabla + " set borrado = true where " + columna + " = " + valor;
+			MySqlCommand commandDatabase = new MySqlCommand(update, databaseConnection);
+			commandDatabase.CommandTimeout = timeOut;
+			try
+			{
+				databaseConnection.Open();
+				MySqlDataReader myReader = commandDatabase.ExecuteReader();
+				databaseConnection.Close();
+			}
+			catch (Exception ex)
+			{
+				databaseConnection.Close();
+				return false;
+			}
+			return true;
+		}
+
+		public bool Actualizar(string update)
+		{
+			MySqlConnection databaseConnection = new MySqlConnection(connectionString);
+			MySqlCommand commandDatabase = new MySqlCommand(update, databaseConnection);
+			commandDatabase.CommandTimeout = timeOut;
+			try
+			{
+				databaseConnection.Open();
+				MySqlDataReader myReader = commandDatabase.ExecuteReader();
+				databaseConnection.Close();
+			}
+			catch (Exception ex)
+			{
+				databaseConnection.Close();
+				return false;
+			}
+			return true;
 		}
 	}
 }
