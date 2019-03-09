@@ -60,22 +60,11 @@ namespace GerenciaTaller.Models
 			return dataBase.Agregar(insert);
 		}
 
-		private List<Producto> ConsultarDataBase()
+		public List<Producto> ConsultarDataBase()
 		{
-			List<Producto> lista = new List<Producto>();
 			DataBase.Query dataBase = new DataBase.Query();
 			string select = "SELECT * From Producto";
-			MySqlDataReader resultado = dataBase.Consultar(select);
-			if (resultado != null)
-			{
-				if (resultado.HasRows)
-				{
-					while (resultado.Read())
-					{
-						lista.Add(new Producto(resultado.GetInt32(0), resultado.GetString(1), resultado.GetString(2), resultado.GetInt32(3), new Categoria(resultado.GetString(4))));
-					}
-				}
-			}
+			List<Producto> lista = dataBase.ConsultarProductos(select);
 			return lista;
 		}
 	}

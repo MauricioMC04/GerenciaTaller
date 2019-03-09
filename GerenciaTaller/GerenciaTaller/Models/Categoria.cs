@@ -49,5 +49,13 @@ namespace GerenciaTaller.Models
 				", '" + this.familia.GetNombre() + "')";
 			return dataBase.Agregar(insert);
 		}
+
+		public List<Categoria> ConsultarDataBase()
+		{
+			DataBase.Query dataBase = new DataBase.Query();
+			string select = "SELECT * From Categorias";
+			List<Categoria> lista = dataBase.ConsultarCategorias(select);
+			return lista;
+		}
 	}
 }

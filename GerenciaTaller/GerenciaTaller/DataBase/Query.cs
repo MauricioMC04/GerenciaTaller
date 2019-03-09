@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using GerenciaTaller.Models;
 using MySql.Data.MySqlClient;
 
 namespace GerenciaTaller.DataBase
@@ -36,24 +37,119 @@ namespace GerenciaTaller.DataBase
 			return true;
 		}
 
-		public MySqlDataReader Consultar(string select)
+		public List<Producto> ConsultarProductos(string select)
 		{
 			MySqlConnection databaseConnection = new MySqlConnection(connectionString);
 			MySqlCommand commandDatabase = new MySqlCommand(select, databaseConnection);
 			commandDatabase.CommandTimeout = timeOut;
-			MySqlDataReader reader;
+			List<Producto> lista = new List<Producto>();
 			try
 			{
 				databaseConnection.Open();
-				reader = commandDatabase.ExecuteReader();
+				MySqlDataReader reader = commandDatabase.ExecuteReader();
+				if (reader != null)
+				{
+					if (reader.HasRows)
+					{
+						while (reader.Read())
+						{
+							lista.Add(new Producto(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetInt32(3), new Categoria(reader.GetString(4))));
+						}
+					}
+				}
 				databaseConnection.Close();
-				return reader;
 			}
 			catch (Exception ex)
 			{
 				databaseConnection.Close();
 			}
-			return null;
+			return lista;
+		}
+
+		public List<Servicio> ConsultarServicios(string select)
+		{
+			MySqlConnection databaseConnection = new MySqlConnection(connectionString);
+			MySqlCommand commandDatabase = new MySqlCommand(select, databaseConnection);
+			commandDatabase.CommandTimeout = timeOut;
+			List<Servicio> lista = new List<Servicio>();
+			try
+			{
+				databaseConnection.Open();
+				MySqlDataReader reader = commandDatabase.ExecuteReader();
+				if (reader != null)
+				{
+					if (reader.HasRows)
+					{
+						while (reader.Read())
+						{
+							lista.Add(new Servicio(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetInt32(3)));
+						}
+					}
+				}
+				databaseConnection.Close();
+			}
+			catch (Exception ex)
+			{
+				databaseConnection.Close();
+			}
+			return lista;
+		}
+
+		public List<Categoria> ConsultarCategorias(string select)
+		{
+			MySqlConnection databaseConnection = new MySqlConnection(connectionString);
+			MySqlCommand commandDatabase = new MySqlCommand(select, databaseConnection);
+			commandDatabase.CommandTimeout = timeOut;
+			List<Categoria> lista = new List<Categoria>();
+			try
+			{
+				databaseConnection.Open();
+				MySqlDataReader reader = commandDatabase.ExecuteReader();
+				if (reader != null)
+				{
+					if (reader.HasRows)
+					{
+						while (reader.Read())
+						{
+							lista.Add(new Categoria(reader.GetString(0), reader.GetString(1), new Familia(reader.GetString(2))));
+						}
+					}
+				}
+				databaseConnection.Close();
+			}
+			catch (Exception ex)
+			{
+				databaseConnection.Close();
+			}
+			return lista;
+		}
+		public List<Familia> ConsultarFamilias(string select)
+		{
+			MySqlConnection databaseConnection = new MySqlConnection(connectionString);
+			MySqlCommand commandDatabase = new MySqlCommand(select, databaseConnection);
+			commandDatabase.CommandTimeout = timeOut;
+			List<Familia> lista = new List<Familia>();
+			try
+			{
+				databaseConnection.Open();
+				MySqlDataReader reader = commandDatabase.ExecuteReader();
+				if (reader != null)
+				{
+					if (reader.HasRows)
+					{
+						while (reader.Read())
+						{
+							lista.Add(new Familia(reader.GetString(0), reader.GetString(1)));
+						}
+					}
+				}
+				databaseConnection.Close();
+			}
+			catch (Exception ex)
+			{
+				databaseConnection.Close();
+			}
+			return lista;
 		}
 	}
 }

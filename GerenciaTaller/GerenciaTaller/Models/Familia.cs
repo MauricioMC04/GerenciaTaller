@@ -20,6 +20,11 @@ namespace GerenciaTaller.Models
 			this.descripcion = _descripcion;
 		}
 
+		public Familia(string _nombre)
+		{
+			this.nombre = _nombre;
+		}
+
 		public string GetNombre()
 		{
 			return this.nombre;
@@ -35,6 +40,14 @@ namespace GerenciaTaller.Models
 			DataBase.Query dataBase = new DataBase.Query();
 			string insert = "INSERT INTO Familias VALUES ('" + this.nombre + "', '" + this.descripcion + "')";
 			return dataBase.Agregar(insert);
+		}
+
+		public List<Familia> ConsultarDataBase()
+		{
+			DataBase.Query dataBase = new DataBase.Query();
+			string select = "SELECT * From Familias";
+			List<Familia> lista = dataBase.ConsultarFamilias(select);
+			return lista;
 		}
 	}
 }

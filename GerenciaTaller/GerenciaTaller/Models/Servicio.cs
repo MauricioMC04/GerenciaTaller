@@ -51,5 +51,13 @@ namespace GerenciaTaller.Models
 				this.descripcion + "', " + this.precio + ")";
 			return dataBase.Agregar(insert);
 		}
+
+		public List<Servicio> ConsultarDataBase()
+		{
+			DataBase.Query dataBase = new DataBase.Query();
+			string select = "SELECT * From Servicios";
+			List<Servicio> lista = dataBase.ConsultarServicios(select);
+			return lista;
+		}
 	}
 }
