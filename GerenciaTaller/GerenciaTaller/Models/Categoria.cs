@@ -85,5 +85,12 @@ namespace GerenciaTaller.Models
 			DataBase.Query dataBase = new DataBase.Query();
 			return dataBase.Eliminar("Categorias", "nombre", "'" + this.nombre + "'");
 		}
+
+		public bool Actualizar(string descripcionNueva)
+		{
+			DataBase.Query dataBase = new DataBase.Query();
+			string update = "update Categorias set descripcion = '" + descripcionNueva + "' where nombre = '" + this.nombre + "'";
+			return dataBase.Actualizar(update);
+		}
 	}
 }

@@ -118,5 +118,19 @@ namespace GerenciaTaller.Models
 			DataBase.Query dataBase = new DataBase.Query();
 			return dataBase.Eliminar("Producto", "codigo", this.codigo.ToString());
 		}
+
+		public bool Actualizar(string nombreNuevo, string descripcionNueva, int precio)
+		{
+			DataBase.Query dataBase = new DataBase.Query();
+			string update = "update Producto set nombre = '" + nombreNuevo + "', descripcion = '" + descripcionNueva + "', precio = " + precio.ToString() + " where codigo = " + this.codigo;
+			return dataBase.Actualizar(update);
+		}
+
+		public bool ActualizarInventario(int cantidadNueva)
+		{
+			DataBase.Query dataBase = new DataBase.Query();
+			string update = "update Inventario set cantidad = " + cantidadNueva + " where codigoProducto = " + this.codigo;
+			return dataBase.Actualizar(update);
+		}
 	}
 }
