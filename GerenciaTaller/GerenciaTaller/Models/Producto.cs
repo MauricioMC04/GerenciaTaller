@@ -90,7 +90,7 @@ namespace GerenciaTaller.Models
 		public List<Producto> ConsultarDataBase()
 		{
 			DataBase.Query dataBase = new DataBase.Query();
-			string select = "SELECT * From Producto";
+			string select = "SELECT * From Producto where borrado = false";
 			List<Producto> lista = dataBase.ConsultarProductos(select);
 			return lista;
 		}
@@ -116,7 +116,8 @@ namespace GerenciaTaller.Models
 		public bool Eliminar()
 		{
 			DataBase.Query dataBase = new DataBase.Query();
-			return dataBase.Eliminar("Producto", "codigo", this.codigo.ToString());
+			return dataBase.Eliminar("Producto", "codigo", this.codigo.ToString()) &&
+				dataBase.AgregarBitacora("BitacoraBorradoProductos", this.codigo.ToString());
 		}
 
 		public bool Actualizar(string nombreNuevo, string descripcionNueva, int precio)

@@ -11,11 +11,10 @@ namespace GerenciaTaller.Controllers
 	{
 		public ActionResult Index()
 		{
-			Producto p = new Producto(4, "Producto 4", "Descripcion 4", 1000, new Categoria("Categoria 1"), false);
-			bool s = p.ActualizarInventario(70);
-			bool d = p.Actualizar("Producto 4 Editado", "Descripcion 4 Editado", 9999);
+			Producto p = new Producto(3, "Producto 4", "Descripcion 4", 1000, new Categoria("Categoria 1"), false);
+			p.Eliminar();
 			int a = 0;
-			return View();	
+			return View();
 		}
 
 		public ActionResult About()

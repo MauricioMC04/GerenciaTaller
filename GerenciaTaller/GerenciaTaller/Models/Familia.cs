@@ -56,7 +56,7 @@ namespace GerenciaTaller.Models
 		public List<Familia> ConsultarDataBase()
 		{
 			DataBase.Query dataBase = new DataBase.Query();
-			string select = "SELECT * From Familias";
+			string select = "SELECT * From Familias where borrado = false";
 			List<Familia> lista = dataBase.ConsultarFamilias(select);
 			return lista;
 		}
@@ -76,7 +76,8 @@ namespace GerenciaTaller.Models
 		public bool Eliminar()
 		{
 			DataBase.Query dataBase = new DataBase.Query();
-			return dataBase.Eliminar("Familias", "nombre", "'" + this.nombre + "'");
+			return dataBase.Eliminar("Familias", "nombre", "'" + this.nombre + "'") && 
+				dataBase.AgregarBitacora("BitacoraBorradoFamilias", "'" + this.nombre + "'");
 		}
 
 		public bool Actualizar(string descripcionNueva)

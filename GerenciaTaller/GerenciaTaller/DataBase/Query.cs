@@ -220,5 +220,55 @@ namespace GerenciaTaller.DataBase
 			}
 			return true;
 		}
+
+		public bool AgregarBitacora(string tabla, string valor)
+		{
+			MySqlConnection databaseConnection = new MySqlConnection(connectionString);
+			string insert = "insert into " + tabla + " Values (" + valor + ", now())";
+			MySqlCommand commandDatabase = new MySqlCommand(insert, databaseConnection);
+			commandDatabase.CommandTimeout = timeOut;
+			try
+			{
+				databaseConnection.Open();
+				MySqlDataReader myReader = commandDatabase.ExecuteReader();
+				databaseConnection.Close();
+			}
+			catch (MySqlException ex)
+			{
+				databaseConnection.Close();
+				return false;
+			}
+			return true;
+		}
+
+		//public int ConsultarBitacoras()
+		//{
+		//	string select = "select ifnull(max(" + columna + "), 0) from " + tabla;
+		//	MySqlConnection databaseConnection = new MySqlConnection(connectionString);
+		//	MySqlCommand commandDatabase = new MySqlCommand(select, databaseConnection);
+		//	commandDatabase.CommandTimeout = timeOut;
+		//	int mayor = -1;
+		//	try
+		//	{
+		//		databaseConnection.Open();
+		//		MySqlDataReader reader = commandDatabase.ExecuteReader();
+		//		if (reader != null)
+		//		{
+		//			if (reader.HasRows)
+		//			{
+		//				while (reader.Read())
+		//				{
+		//					mayor = reader.GetInt32(0);
+		//				}
+		//			}
+		//		}
+		//		databaseConnection.Close();
+		//	}
+		//	catch (Exception ex)
+		//	{
+		//		databaseConnection.Close();
+		//	}
+		//	return mayor;
+		//}
 	}
 }
