@@ -14,6 +14,12 @@ namespace GerenciaTaller.Models
 		{
 		}
 
+		public BitacoraBorrado(string _identificador, DateTime _fechaBorrado)
+		{
+			this.identificador = _identificador;
+			this.fechaBorrado = _fechaBorrado;
+		}
+
 		public BitacoraBorrado(string _identificador)
 		{
 			this.identificador = _identificador;

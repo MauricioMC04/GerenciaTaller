@@ -241,34 +241,40 @@ namespace GerenciaTaller.DataBase
 			return true;
 		}
 
-		//public int ConsultarBitacoras()
-		//{
-		//	string select = "select ifnull(max(" + columna + "), 0) from " + tabla;
-		//	MySqlConnection databaseConnection = new MySqlConnection(connectionString);
-		//	MySqlCommand commandDatabase = new MySqlCommand(select, databaseConnection);
-		//	commandDatabase.CommandTimeout = timeOut;
-		//	int mayor = -1;
-		//	try
-		//	{
-		//		databaseConnection.Open();
-		//		MySqlDataReader reader = commandDatabase.ExecuteReader();
-		//		if (reader != null)
-		//		{
-		//			if (reader.HasRows)
-		//			{
-		//				while (reader.Read())
-		//				{
-		//					mayor = reader.GetInt32(0);
-		//				}
-		//			}
-		//		}
-		//		databaseConnection.Close();
-		//	}
-		//	catch (Exception ex)
-		//	{
-		//		databaseConnection.Close();
-		//	}
-		//	return mayor;
-		//}
+		public List<BitacoraBorrado> ConsultarBitacoras()
+		{
+			string select = "select * from ";
+			string[] tablas = {"BitacoraBorradoFamilias", "BitacoraBorradoCategorias", "BitacoraBorradoProductos",
+				"BitacoraBorradoServicios" };
+			List<BitacoraBorrado> lista = new List<BitacoraBorrado>();
+			MySqlConnection databaseConnection = new MySqlConnection(connectionString);
+			for(int i = 0;  i < tablas.Length; i++)
+			{
+				MySqlCommand commandDatabase = new MySqlCommand(select + tablas[i], databaseConnection);
+				commandDatabase.CommandTimeout = timeOut;
+				try
+				{
+					databaseConnection.Open();
+					MySqlDataReader reader = commandDatabase.ExecuteReader();
+					if (reader != null)
+					{
+						if (reader.HasRows)
+						{
+							while (reader.Read())
+							{
+								lista.Add(new BitacoraBorrado(tablas[i] + ": " + reader.GetString(0), 
+									reader.GetDateTime(1)));
+							}
+						}
+					}
+					databaseConnection.Close();
+				}
+				catch (Exception ex)
+				{
+					databaseConnection.Close();
+				}
+			}
+			return lista;
+		}
 	}
 }

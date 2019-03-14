@@ -13,6 +13,8 @@ namespace GerenciaTaller.Controllers
 		{
 			Producto p = new Producto(3, "Producto 4", "Descripcion 4", 1000, new Categoria("Categoria 1"), false);
 			p.Eliminar();
+			DataBase.Query s = new DataBase.Query();
+			List<BitacoraBorrado> lista = s.ConsultarBitacoras();
 			int a = 0;
 			return View();
 		}
