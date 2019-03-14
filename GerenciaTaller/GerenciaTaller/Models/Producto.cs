@@ -13,70 +13,125 @@ namespace GerenciaTaller.Models
 		private string descripcion;
 		private int precio;
 		private Categoria categoria;
+		private bool borrado;
 
 		public Producto()
 		{
 		}
 
-		public Producto(int _codigo, string _nombre, string _descripcion, int _precio, Categoria _categoria)
+		public Producto(int _codigo, string _nombre, string _descripcion, int _precio, Categoria _categoria, bool _borrado)
 		{
 			this.codigo = _codigo;
 			this.nombre = _nombre;
 			this.descripcion = _descripcion;
 			this.precio = _precio;
 			this.categoria = _categoria;
+			this.borrado = _borrado;
+		}
+
+		public Producto(int _codigo, string _nombre)
+		{
+			this.codigo = _codigo;
+			this.nombre = _nombre;
 		}
 
 		public int GetCodigo()
 		{
-			return codigo;
+			return this.codigo;
 		}
 
 		public string GetNombre()
 		{
-			return nombre;
+			return this.nombre;
 		}
 			
 		public string GetDescripcion()
 		{
-			return descripcion;
+			return this.descripcion;
 		}
 			
 		public int GetPrecio()
 		{
-			return precio;
+			return this.precio;
 		}
 			
 		public Categoria GetCategoria()
 		{
-			return categoria;
+			return this.categoria;
 		}
 
-		public bool AgregarDataBase()
+		public bool GetBorrado()
 		{
-			DataBase.Query dataBase = new DataBase.Query();
-			string insert = "INSERT INTO Producto VALUES (" + this.codigo + ", '" + this.nombre + "', '" +
-				this.descripcion + "', " + this.precio + ", '" + this.categoria.GetNombre() + "')";
-			return dataBase.Agregar(insert);
+			return this.borrado;
 		}
 
-		private List<Producto> ConsultarDataBase()
+		public bool AgregarDataBase(int cantidad)
 		{
-			List<Producto> lista = new List<Producto>();
-			DataBase.Query dataBase = new DataBase.Query();
-			string select = "SELECT * From Producto";
-			MySqlDataReader resultado = dataBase.Consultar(select);
-			if (resultado != null)
+			if (!this.Existe())
 			{
-				if (resultado.HasRows)
+				Servicio servicio = new Servicio(-1, this.nombre);
+				if (!servicio.Existe())
 				{
-					while (resultado.Read())
+					int mayorProducto = this.GetCodigoMayor("codigo", "Producto");
+					int mayorServicio = this.GetCodigoMayor("codigo", "Servicios");
+					this.codigo = (mayorProducto > mayorServicio) ? mayorProducto + 1 : mayorServicio + 1;
+					DataBase.Query dataBase = new DataBase.Query();
+					string insertProducto = "INSERT INTO Producto VALUES (" + this.codigo + ", '" + this.nombre + "', '" + this.descripcion + "', " + this.precio + ", '" + this.categoria.GetNombre() + "', " + this.borrado + ")";
+					if (dataBase.Agregar(insertProducto))
 					{
-						lista.Add(new Producto(resultado.GetInt32(0), resultado.GetString(1), resultado.GetString(2), resultado.GetInt32(3), new Categoria(resultado.GetString(4))));
+						string insertInventario = "INSERT INTO Inventario VALUES(" + this.codigo + ", " + cantidad.ToString() + ")";
+						return dataBase.Agregar(insertInventario);
 					}
 				}
 			}
+			return false;
+		}
+
+		public List<Producto> ConsultarDataBase()
+		{
+			DataBase.Query dataBase = new DataBase.Query();
+			string select = "SELECT * From Producto where borrado = false";
+			List<Producto> lista = dataBase.ConsultarProductos(select);
 			return lista;
+		}
+
+		public bool Existe()
+		{
+			if (!this.nombre.Equals(""))
+			{
+				DataBase.Query dataBase = new DataBase.Query();
+				string select = "SELECT * From Producto where nombre = '" + this.nombre + "'";
+				List<Producto> lista = dataBase.ConsultarProductos(select);
+				return lista.Count > 0;
+			}
+			return true;
+		}
+
+		public int GetCodigoMayor(string columna, string tabla)
+		{
+			DataBase.Query dataBase = new DataBase.Query();
+			return dataBase.GetMayor(columna, tabla);
+		}
+
+		public bool Eliminar()
+		{
+			DataBase.Query dataBase = new DataBase.Query();
+			return dataBase.Eliminar("Producto", "codigo", this.codigo.ToString()) &&
+				dataBase.AgregarBitacora("BitacoraBorradoProductos", this.codigo.ToString());
+		}
+
+		public bool Actualizar(string nombreNuevo, string descripcionNueva, int precio)
+		{
+			DataBase.Query dataBase = new DataBase.Query();
+			string update = "update Producto set nombre = '" + nombreNuevo + "', descripcion = '" + descripcionNueva + "', precio = " + precio.ToString() + " where codigo = " + this.codigo;
+			return dataBase.Actualizar(update);
+		}
+
+		public bool ActualizarInventario(int cantidadNueva)
+		{
+			DataBase.Query dataBase = new DataBase.Query();
+			string update = "update Inventario set cantidad = " + cantidadNueva + " where codigoProducto = " + this.codigo;
+			return dataBase.Actualizar(update);
 		}
 	}
 }

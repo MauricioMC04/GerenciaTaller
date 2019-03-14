@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GerenciaTaller.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,13 +11,17 @@ namespace GerenciaTaller.Controllers
 	{
 		public ActionResult Index()
 		{
-			return View();	
+			Producto p = new Producto(3, "Producto 4", "Descripcion 4", 1000, new Categoria("Categoria 1"), false);
+			p.Eliminar();
+			DataBase.Query s = new DataBase.Query();
+			List<BitacoraBorrado> lista = s.ConsultarBitacoras();
+			int a = 0;
+			return View();
 		}
 
 		public ActionResult About()
 		{
 			ViewBag.Message = "Your application description page.";
-
 			return View();
 		}
         public ActionResult Familia()
@@ -42,7 +47,6 @@ namespace GerenciaTaller.Controllers
         public ActionResult Contact()
 		{
 			ViewBag.Message = "Your contact page.";
-
 			return View();
 		}
 
