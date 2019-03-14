@@ -20,7 +20,12 @@ namespace GerenciaTaller.Models
 			this.descripcion = _descripcion;
 		}
 
-		public string GetNombre()
+        public Familia(string _nombre)
+        {
+            this.nombre = _nombre;
+        }
+
+        public string GetNombre()
 		{
 			return this.nombre;
 		}

@@ -1,0 +1,90 @@
+﻿@{
+
+}
+
+<!DOCTYPE html>
+
+<h2>Familias</h2>
+
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+    
+   
+    <style>
+        #myInput {
+            float: left;
+            margin-right: 60px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" >
+        <div>
+            <input class="form-control" id="myInput" type="text" placeholder="Search..">
+            <button class="btn btn-primary  dropdown-toggle" type="button" data-toggle="dropdown">
+                Dropdown Example
+                <span class="caret"></span>
+            </button>
+
+        </div>
+
+        
+        <br>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Descripcion</th>
+                </tr>
+            </thead>
+            <tbody id="myTable">
+                <tr>
+                    <td>John</td>
+                    <td>Doe</td>
+                </tr>
+                <tr>
+                    <td>Mary</td>
+                    <td>Moe</td>
+                </tr>
+                <tr>
+                    <td>July</td>
+                    <td>Dooley</td>
+                </tr>
+            </tbody>
+        </table>
+        <a class="btn btn-primary" href="#" role="button">Link</a>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $("#myInput").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#myTable tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $("#myInput").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $(".dropdown-menu li").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+
+
+</body>
+</html>
