@@ -40,8 +40,10 @@ namespace GerenciaTaller.Controllers
         public ActionResult CategoriasAgregar()
         {
             ViewBag.Message = "Your application description page.";
-
-            return View();
+            Familia familia = new Familia();
+            Consulta consulta = new Consulta(familia.ConsultarDataBase());
+            int a = 0;
+            return View(consulta);
         }
 
         public ActionResult Contact()
@@ -54,7 +56,7 @@ namespace GerenciaTaller.Controllers
         {
             var nombre = form["txtNombre"];
             var descripcion = form["txtDescripcion"];
-            Models.Familia familia = new Models.Familia(nombre, descripcion);
+            Models.Familia familia = new Models.Familia(nombre, descripcion, false);
             //if (!familia.Existe())
             //{
             familia.AgregarDataBase();
@@ -64,15 +66,15 @@ namespace GerenciaTaller.Controllers
 
         public ActionResult GuardarCategoria(FormCollection form)
         {
-            var familia = form["txtFamilia"];
+            var familia = form["cmbFamilias"];
             var nombre = form["txtNombre"];
             var descripcion = form["txtDescripcion"];
-            Models.Categoria categoria = new Models.Categoria(nombre, descripcion, new Models.Familia(familia));
-            //if (!categoria.Existe())
-            //{
-            categoria.AgregarDataBase();
+            Models.Categoria categoria = new Models.Categoria(nombre, descripcion, new Models.Familia(familia, false), false);
+            if (!categoria.Existe())
+            {
+                categoria.AgregarDataBase();
+            }
             return View("Index");
-            //}
         }
     }
 }

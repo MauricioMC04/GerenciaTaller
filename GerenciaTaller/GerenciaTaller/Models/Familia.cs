@@ -22,9 +22,10 @@ namespace GerenciaTaller.Models
 			this.borrado = _borrado;
 		}
 
-		public Familia(string _nombre)
+		public Familia(string _nombre, bool _borrado)
 		{
 			this.nombre = _nombre;
+            this.borrado = _borrado;  
 		}
 
         public Familia(string _nombre)
