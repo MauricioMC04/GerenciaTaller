@@ -1,4 +1,7 @@
-﻿@{
+﻿@using GerenciaTaller.Models
+@model GerenciaTaller.Models.Consulta
+@*@model IEnumerable<GerenciaTaller.Models.Producto>*@
+@{
 
 }
 
@@ -15,18 +18,27 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 
-    
-   
+
+
     <style>
         #myInput {
             float: left;
             margin-right: 60px;
         }
     </style>
+
+    <style>
+        p {
+            display: inline-block;
+            width: 100px;
+        }
+    </style>
+
+
 </head>
 <body>
 
-    <div class="container" >
+    <div class="container">
         <div>
             <input class="form-control" id="myInput" type="text" placeholder="Search..">
             <button class="btn btn-primary  dropdown-toggle" type="button" data-toggle="dropdown">
@@ -36,30 +48,52 @@
 
         </div>
 
-        
+
         <br>
-        <table class="table table-bordered table-striped">
-            <thead>
-                <tr>
-                    <th>Nombre</th>
-                    <th>Descripcion</th>
-                </tr>
-            </thead>
-            <tbody id="myTable">
-                <tr>
-                    <td>John</td>
-                    <td>Doe</td>
-                </tr>
-                <tr>
-                    <td>Mary</td>
-                    <td>Moe</td>
-                </tr>
-                <tr>
-                    <td>July</td>
-                    <td>Dooley</td>
-                </tr>
-            </tbody>
-        </table>
+        <div>
+
+
+
+            @*@foreach (GerenciaTaller.Models.Producto item in Model)
+            @*{
+                <div class="alert-info">
+
+                   
+                    <p><strong>Nombre: </strong>@item.GetNombre()</p>
+                    <p><strong>Descripcion: </strong>@item.GetDescripcion()</p>
+                    <p><strong>Categoria: </strong>@item.GetCategoria().GetNombre()</p>
+                    <p><strong>Precio: </strong>@item.GetPrecio()</p>
+                    @Html.ActionLink("Eliminar", "ProductoEliminar", new { /* id=item.PrimaryKey */ })
+                </div>
+                <hr />
+            }*@
+
+
+
+            @{
+
+
+                foreach (GerenciaTaller.Models.Familia familia in Model.GetFamilias())
+                {
+
+
+
+
+            
+                <div class="alert-info">
+                    <p><strong>Nombre: </strong>@familia.GetNombre()</p>
+                    <p><strong>Descripcion: </strong>@familia.GetDescripcion()</p>
+                    <HR size="10" width="70%" align="left">
+
+                </div>
+
+
+                @*<option value="@familia.GetNombre(),@familia.GetDescripcion()">@familia.GetNombre(), </option>*@
+                }
+                }
+
+            </div>
+
         <a class="btn btn-primary" href="#" role="button">Link</a>
     </div>
 
