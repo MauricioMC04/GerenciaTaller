@@ -27,12 +27,14 @@ namespace GerenciaTaller.Controllers
         public ActionResult Familia()
         {
             ViewBag.Message = "Your application description page.";
-
-            return View();
+            Familia familia = new Familia();
+            Consulta consulta = new Consulta(familia.ConsultarDataBase());
+            return View(consulta);
         }
         public ActionResult FamiliasAgregar()
         {
             ViewBag.Message = "Your application description page.";
+
 
             return View();
         }
@@ -42,7 +44,6 @@ namespace GerenciaTaller.Controllers
             ViewBag.Message = "Your application description page.";
             Familia familia = new Familia();
             Consulta consulta = new Consulta(familia.ConsultarDataBase());
-            int a = 0;
             return View(consulta);
         }
 
