@@ -1,0 +1,49 @@
+﻿@model GerenciaTaller.Models.Servicio
+
+@{
+    ViewBag.Title = "Agregar Servicios";
+}
+
+<h2>Agregar Servicios</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Servicio nuevo</h4>
+        <div class="form-group">
+            <label for="txtCod">Código de servicio</label>
+            <input class="form-control" id="txtCod" name="txtCod" type="text" value="">
+        </div>
+
+        <div class="form-group">
+            <label for="txtNombre">Nombre</label>
+            <input class="form-control" id="txtNombre" name="txtNombre" type="text" value="">
+        </div>
+        <div class="form-group">
+            <label for="txtDescripcion">Descripcion</label>
+            <input class="form-control" id="txtDescripcion" name="txtDescripcion" type="text" value="">
+        </div>
+        <div class="form-group">
+            <label for="txtPrecio">Precio</label>
+            <input class="form-control" id="txtPrecio" name="txtPrecio" type="number" value="">
+        </div>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Agregar" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

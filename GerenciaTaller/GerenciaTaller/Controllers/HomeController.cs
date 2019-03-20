@@ -76,5 +76,56 @@ namespace GerenciaTaller.Controllers
             }
             return View("Index");
         }
+
+        public ActionResult ProductosAgregar()
+        {
+            Models.Categoria cat = new Categoria();
+            List<Categoria> lisC = cat.ConsultarDataBase();
+            var model = lisC;
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult ProductosAgregar(FormCollection form)
+        {
+            try
+            {
+                var cod = int.Parse(form["txtCod"]);
+                var pre = int.Parse(form["txtPrecio"]);
+                var categoria = form["cmbCategorias"];
+                Models.Categoria cat = new Categoria(categoria);
+                var nombre = form["txtNombre"];
+                var descripcion = form["txtDescripcion"];
+                Models.Producto prod = new Producto(cod, nombre, descripcion, pre, cat, false);
+                var res = prod.AgregarDataBase(0);
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return RedirectToAction("Index");
+            }
+
+        }
+
+        public ActionResult ServiciosAgregar()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ServiciosAgregar(FormCollection form)
+        {
+            try
+            {
+                var cod = int.Parse(form["txtCod"]);
+                var pre = int.Parse(form["txtPrecio"]);
+                var nombre = form["txtNombre"];
+                var descripcion = form["txtDescripcion"];
+                Models.Servicio ser = new Servicio(cod, nombre, descripcion, pre, false);
+                ser.AgregarDataBase();
+                return RedirectToAction("Index");
+            }
+            catch { return RedirectToAction("Index"); }
+        }
     }
 }
