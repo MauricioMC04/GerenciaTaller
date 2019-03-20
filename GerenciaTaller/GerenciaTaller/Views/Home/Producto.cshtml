@@ -1,0 +1,26 @@
+﻿@model IEnumerable<GerenciaTaller.Models.Producto>
+
+@{
+    ViewBag.Title = "Producto";
+}
+
+<h2>Producto</h2>
+
+<p>
+    @Html.ActionLink("Agregar Producto", "ProductosAgregar")
+</p>
+
+
+@foreach (GerenciaTaller.Models.Producto item in Model)
+{
+    <div class="alert-info">
+        
+        <p><strong>Código: </strong>@item.GetCodigo()</p>
+        <p><strong>Nombre: </strong>@item.GetNombre()</p>
+        <p><strong>Descripcion: </strong>@item.GetDescripcion()</p>
+        <p><strong>Categoria: </strong>@item.GetCategoria().GetNombre()</p>
+        <p><strong>Precio: </strong>@item.GetPrecio()</p>
+        @Html.ActionLink("Eliminar", "ProductoEliminar", new { id=item.GetCodigo() })
+    </div>
+    <hr />
+}

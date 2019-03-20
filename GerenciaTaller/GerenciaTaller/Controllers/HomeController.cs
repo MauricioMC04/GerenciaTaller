@@ -77,6 +77,7 @@ namespace GerenciaTaller.Controllers
             return View("Index");
         }
 
+        //muestra la ventana 
         public ActionResult ProductosAgregar()
         {
             Models.Categoria cat = new Categoria();
@@ -85,6 +86,7 @@ namespace GerenciaTaller.Controllers
             return View(model);
         }
 
+        //agrega
         [HttpPost]
         public ActionResult ProductosAgregar(FormCollection form)
         {
@@ -98,20 +100,20 @@ namespace GerenciaTaller.Controllers
                 var descripcion = form["txtDescripcion"];
                 Models.Producto prod = new Producto(cod, nombre, descripcion, pre, cat, false);
                 var res = prod.AgregarDataBase(0);
-                return RedirectToAction("Index");
+                return RedirectToAction("Producto");
             }
             catch
             {
-                return RedirectToAction("Index");
+                return RedirectToAction("Producto");
             }
 
         }
-
+        
         public ActionResult ServiciosAgregar()
         {
             return View();
         }
-
+        //agrega
         [HttpPost]
         public ActionResult ServiciosAgregar(FormCollection form)
         {
@@ -123,9 +125,50 @@ namespace GerenciaTaller.Controllers
                 var descripcion = form["txtDescripcion"];
                 Models.Servicio ser = new Servicio(cod, nombre, descripcion, pre, false);
                 ser.AgregarDataBase();
-                return RedirectToAction("Index");
+                return RedirectToAction("Servicio");
             }
-            catch { return RedirectToAction("Index"); }
+            catch { return RedirectToAction("Servicio"); }
+        }
+        //muestra la ventana 
+        public ActionResult Inventario()
+        {
+            return View();
+        }
+        //muestra la ventana 
+        public ActionResult Producto()
+        {
+            Models.Producto prod = new Producto();
+            List<Models.Producto> list= prod.ConsultarDataBase();
+            var model = list;
+            return View(model);
+        }
+        //muestra la ventana 
+        public ActionResult Servicio()
+        {
+            Models.Servicio ser = new Servicio();
+            List<Models.Servicio> list = ser.ConsultarDataBase();
+            var model = list;
+            return View(model);
+        }
+
+        public ActionResult ProductoEliminar(int id)
+        {
+            try {
+                Models.Producto prod = new Producto(id, "");
+                prod.Eliminar();
+                return RedirectToAction("Producto");
+            } catch { return RedirectToAction("Producto"); }
+            
+        }
+
+        public ActionResult ServicioEliminar(int id)
+        {
+            try {
+                Models.Servicio ser = new Servicio(id, "");
+                ser.Eliminar();
+                return RedirectToAction("Servicio");
+            } catch { return RedirectToAction("Servicio"); }
+            
         }
     }
 }
