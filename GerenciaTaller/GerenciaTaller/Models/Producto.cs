@@ -14,12 +14,14 @@ namespace GerenciaTaller.Models
 		private int precio;
 		private Categoria categoria;
 		private bool borrado;
+		private int cantidad;
 
 		public Producto()
 		{
 		}
 
-		public Producto(int _codigo, string _nombre, string _descripcion, int _precio, Categoria _categoria, bool _borrado)
+		public Producto(int _codigo, string _nombre, string _descripcion, int _precio, Categoria _categoria,
+			bool _borrado, int _cantidad)
 		{
 			this.codigo = _codigo;
 			this.nombre = _nombre;
@@ -27,6 +29,7 @@ namespace GerenciaTaller.Models
 			this.precio = _precio;
 			this.categoria = _categoria;
 			this.borrado = _borrado;
+			this.cantidad = _cantidad;
 		}
 
 		public Producto(int _codigo, string _nombre)

@@ -53,7 +53,9 @@ namespace GerenciaTaller.DataBase
 					{
 						while (reader.Read())
 						{
-							lista.Add(new Producto(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetInt32(3), new Categoria(reader.GetString(4)), reader.GetBoolean(5)));
+							lista.Add(new Producto(reader.GetInt32(0), reader.GetString(1), 
+								reader.GetString(2), reader.GetInt32(3), new Categoria(reader.GetString(4)),
+								reader.GetBoolean(5), this.ConsultarInventario(reader.GetInt32(0))));
 						}
 					}
 				}
@@ -64,6 +66,36 @@ namespace GerenciaTaller.DataBase
 				databaseConnection.Close();
 			}
 			return lista;
+		}
+
+		private int ConsultarInventario(int codigoProducto)
+		{
+			string select = "select * from Inventario where codigoProducto = " + codigoProducto;
+			int cantidad = 0;
+			MySqlConnection databaseConnection = new MySqlConnection(connectionString);
+			MySqlCommand commandDatabase = new MySqlCommand(select, databaseConnection);
+			commandDatabase.CommandTimeout = timeOut;
+			try
+			{
+				databaseConnection.Open();
+				MySqlDataReader reader = commandDatabase.ExecuteReader();
+				if (reader != null)
+				{
+					if (reader.HasRows)
+					{
+						while (reader.Read())
+						{
+							cantidad = reader.GetInt32(1);
+						}
+					}
+				}
+				databaseConnection.Close();
+			}
+			catch (Exception ex)
+			{
+				databaseConnection.Close();
+			}
+			return cantidad;
 		}
 
 		public List<Servicio> ConsultarServicios(string select)
