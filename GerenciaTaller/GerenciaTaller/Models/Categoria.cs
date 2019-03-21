@@ -29,7 +29,13 @@ namespace GerenciaTaller.Models
 			this.nombre = _nombre;
 		}
 
-		public string GetNombre()
+        public Categoria(string _nombre, bool _borrado)
+        {
+            this.nombre = _nombre;
+            this.borrado = _borrado;
+        }
+
+        public string GetNombre()
 		{
 			return this.nombre;
 		}

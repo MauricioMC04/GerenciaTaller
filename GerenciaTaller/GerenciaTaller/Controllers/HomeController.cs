@@ -11,7 +11,7 @@ namespace GerenciaTaller.Controllers
 	{
 		public ActionResult Index()
 		{
-			Producto p = new Producto(3, "Producto 4", "Descripcion 4", 1000, new Categoria("Categoria 1"), false);
+			Producto p = new Producto(3, "Producto 4", "Descripcion 4", 1000, new Categoria("Categoria 1"), false, 0);
 			p.Eliminar();
 			DataBase.Query s = new DataBase.Query();
 			List<BitacoraBorrado> lista = s.ConsultarBitacoras();
@@ -29,6 +29,13 @@ namespace GerenciaTaller.Controllers
             ViewBag.Message = "Your application description page.";
             Familia familia = new Familia();
             Consulta consulta = new Consulta(familia.ConsultarDataBase());
+            return View(consulta);
+        }
+        public ActionResult Categoria()
+        {
+            ViewBag.Message = "Your application description page.";
+            Categoria categoria = new Categoria();
+            Consulta consulta = new Consulta(categoria.ConsultarDataBase());
             return View(consulta);
         }
         public ActionResult FamiliasAgregar()
@@ -99,7 +106,7 @@ namespace GerenciaTaller.Controllers
                 Models.Categoria cat = new Categoria(categoria);
                 var nombre = form["txtNombre"];
                 var descripcion = form["txtDescripcion"];
-                Models.Producto prod = new Producto(cod, nombre, descripcion, pre, cat, false);
+                Models.Producto prod = new Producto(cod, nombre, descripcion, pre, cat, false, 0);
                 var res = prod.AgregarDataBase(0);
                 return RedirectToAction("Producto");
             }
@@ -170,6 +177,22 @@ namespace GerenciaTaller.Controllers
                 return RedirectToAction("Servicio");
             } catch { return RedirectToAction("Servicio"); }
             
+        }
+
+        public ActionResult FamiliaEliminar(string nombre)
+        {
+
+            Models.Familia fam = new Familia(nombre);
+            fam.Eliminar();
+            return RedirectToAction("Familia");
+        }
+
+        public ActionResult CategoriaEliminar(string nombre)
+        {
+
+            Models.Categoria cat = new Categoria(nombre);
+            cat.Eliminar();
+            return RedirectToAction("Categoria");
         }
     }
 }

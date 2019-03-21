@@ -23,5 +23,19 @@ namespace GerenciaTaller.Models
         {
             return this.familias;
         }
+
+        private List<Categoria> categorias;
+
+        
+
+        public Consulta(List<Categoria> _categorias)
+        {
+            this.categorias = _categorias;
+        }
+
+        public List<Categoria> GetCategorias()
+        {
+            return this.categorias;
+        }
     }
 }

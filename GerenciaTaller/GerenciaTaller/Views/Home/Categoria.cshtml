@@ -1,14 +1,13 @@
 ﻿@using GerenciaTaller.Models
 @model GerenciaTaller.Models.Consulta
-@*@model IEnumerable<GerenciaTaller.Models.Familia>*@
 
 @{
-
+    ViewBag.Title = "Categoria";
 }
 
-<!DOCTYPE html>
+<h2>Categoria</h2>
 
-<h2>Familias</h2>
+<!DOCTYPE html>
 
 
 <html lang="en">
@@ -29,11 +28,11 @@
     </style>
 
     @*<style>
-        p {
-            display: inline-block;
-            width: 100px;
-        }
-    </style>*@
+            p {
+                display: inline-block;
+                width: 100px;
+            }
+        </style>*@
 
 
 </head>
@@ -50,35 +49,32 @@
 
             </div>
             <br>
-           
-
-                
-                @foreach (GerenciaTaller.Models.Familia familia in Model.GetFamilias())
-                {
-                    <div class="alert-info">
-
-
-                        <p><strong>Nombre: </strong>@familia.GetNombre()</p>
-                        <p><strong>Descripcion: </strong>@familia.GetDescripcion()</p>
-
-                     
-
-                        @Html.ActionLink("Eliminar", "FamiliaEliminar", new { nombre = familia.GetNombre() })
-                    </div>
-                    <hr />
-
-
-
-
-                                    @*<div class="alert-info">
-                            <p><strong>Nombre: </strong>@familia.GetNombre()</p>
-                            <p><strong>Descripcion: </strong>@familia.GetDescripcion()</p>
-                            <HR size="10" width="70%" align="left">*@
-                   
-                }
-                
-
       
+
+            @*@foreach (GerenciaTaller.Models.Categoria categoria in Model.GetCategorias())
+            {*@
+                @foreach (GerenciaTaller.Models.Categoria categoria in Model.GetCategorias())
+            {
+                <div class="alert-info">
+                    
+
+                    <p><strong>Nombre: </strong>@categoria.GetNombre()</p>
+                    <p><strong>Descripcion: </strong>@categoria.GetDescripcion()</p>
+                    <p><strong>Familia: </strong>@categoria.GetFamilia().GetNombre()</p>
+
+                    @Html.ActionLink("Eliminar", "CategoriaEliminar", new { nombre = categoria.GetNombre() })
+                </div>
+                <hr />
+
+
+
+
+               
+
+            }
+
+
+
 
             <a class="btn btn-primary" href="#" role="button">Agregar</a>
         </div>
