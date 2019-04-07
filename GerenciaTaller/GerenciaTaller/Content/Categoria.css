@@ -1,0 +1,37 @@
+﻿.info {
+    width: 75%;
+    float: left;
+}
+
+.infoButtons {
+    width: 25%;
+    float: left;
+    text-align: center;
+}
+
+.alert-info{
+    position: relative;
+    float: left;
+    width: 100%;
+}
+
+hr {
+    width: 100%;
+}
+
+br {
+    width: 100%;
+}
+
+.edit {
+    width: 100%;
+    
+    display: none;
+    
+}
+
+.editForm {
+    width: 60%;
+    background-color: #0094ff;
+    position: relative;
+}

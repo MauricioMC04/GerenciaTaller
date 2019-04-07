@@ -127,11 +127,11 @@ namespace GerenciaTaller.Controllers
         {
             try
             {
-                var cod = int.Parse(form["txtCod"]);
+                //var cod = int.Parse(form["txtCod"]);
                 var pre = int.Parse(form["txtPrecio"]);
                 var nombre = form["txtNombre"];
                 var descripcion = form["txtDescripcion"];
-                Models.Servicio ser = new Servicio(cod, nombre, descripcion, pre, false);
+                Models.Servicio ser = new Servicio(0, nombre, descripcion, pre, false);
                 ser.AgregarDataBase();
                 return RedirectToAction("Servicio");
             }
@@ -190,9 +190,59 @@ namespace GerenciaTaller.Controllers
         public ActionResult CategoriaEliminar(string nombre)
         {
 
+
             Models.Categoria cat = new Categoria(nombre);
             cat.Eliminar();
             return RedirectToAction("Categoria");
+        }
+
+        [HttpPost]
+        public ActionResult ProductosEditar(FormCollection form)
+        {
+            try
+            {
+                Models.Producto producto = new Producto(int.Parse(form["txtCodigo"]));
+                producto.Actualizar(form["txtNombre"], form["txtDescripcion"], 
+                    int.Parse(form["txtPrecio"]), int.Parse(form["txtCantidad"]));
+            }
+            catch {}
+            return RedirectToAction("Producto");
+        }
+
+        [HttpPost]
+        public ActionResult ServiciosEditar(FormCollection form)
+        {
+            try
+            {
+                Models.Servicio servicio = new Servicio(int.Parse(form["txtCod"]));
+                servicio.Actualizar(form["txtNombre"], form["txtDescripcion"], int.Parse(form["txtPrecio"]));
+            }
+            catch {}
+            return RedirectToAction("Servicio");
+        }
+
+        public ActionResult CategoriaEditar(FormCollection form)
+        {
+            try
+            {
+                Models.Categoria categoriaEditar = new Models.Categoria(form["txtNombre"]);
+                categoriaEditar.Actualizar(form["txtDescripcion"]);
+            }
+            catch {}
+            Categoria categoria = new Categoria();
+            Consulta consulta = new Consulta(categoria.ConsultarDataBase());
+            return View("Categoria", consulta);
+        }
+
+        public ActionResult FamiliaEditar(FormCollection form)
+        {
+            try
+            {
+                Models.Familia familia = new Models.Familia(form["txtNombre"]);
+                familia.Actualizar(form["txtDescripcion"]);
+            }
+            catch { }
+            return View("Familias");
         }
     }
 }

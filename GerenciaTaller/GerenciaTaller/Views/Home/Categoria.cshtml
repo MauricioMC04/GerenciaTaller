@@ -15,8 +15,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Content/Categoria.css">
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/Categoria.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    
 
 
 
@@ -49,33 +53,43 @@
 
             </div>
             <br>
-      
+
 
             @*@foreach (GerenciaTaller.Models.Categoria categoria in Model.GetCategorias())
-            {*@
-                @foreach (GerenciaTaller.Models.Categoria categoria in Model.GetCategorias())
+        {*@
+            @foreach (GerenciaTaller.Models.Categoria categoria in Model.GetCategorias())
             {
                 <div class="alert-info">
-                    
-
-                    <p><strong>Nombre: </strong>@categoria.GetNombre()</p>
-                    <p><strong>Descripcion: </strong>@categoria.GetDescripcion()</p>
-                    <p><strong>Familia: </strong>@categoria.GetFamilia().GetNombre()</p>
-
-                    @Html.ActionLink("Eliminar", "CategoriaEliminar", new { nombre = categoria.GetNombre() })
+                    <div class="info">
+                        <p><strong>Nombre: </strong>@categoria.GetNombre()</p>
+                        <p><strong>Descripcion: </strong>@categoria.GetDescripcion()</p>
+                        <p><strong>Familia: </strong>@categoria.GetFamilia().GetNombre()</p>
+                    </div>
+                    <div class="infoButtons">
+                        @Html.ActionLink("Eliminar", "CategoriaEliminar", new { nombre = categoria.GetNombre() })
+                        <br /> <br />
+                        <button id=@("btn" + categoria.GetNombre().Replace(" ", "")) onclick="MostrarEditForm('@categoria.GetNombre().Replace(" ", "")')">Editar</button>
+                    </div>
                 </div>
+                <div class="edit" id=@("editForm" + categoria.GetNombre().Replace(" ", "")) align="center">
+                    <hr />
+                    <div class="editForm">
+                        <form action="../Home/CategoriaEditar" method="POST" id=@("form" + categoria.GetNombre().Replace(" ", ""))>
+                            <div class="form-group">
+                                <label for="txtNombre">Nombre</label>
+                                <input class="form-control" id="txtNombre" name="txtNombre" type="text" value="@categoria.GetNombre()" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="txtDescripcion">Descripcion</label>
+                                <input class="form-control input-lg" id=@("txtDescripcion" + categoria.GetNombre().Replace(" ", "")) name="txtDescripcion" type="text" value="@categoria.GetDescripcion()">
+                            </div>
+                            <button type="button" onclick="Editar('@categoria.GetNombre().Replace(" ", "")')">Editar</button>
+                        </form>
+                    </div>
+                </div>
+                <br />
                 <hr />
-
-
-
-
-               
-
             }
-
-
-
-
             <a class="btn btn-primary" href="#" role="button">Agregar</a>
         </div>
 

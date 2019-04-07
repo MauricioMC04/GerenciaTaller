@@ -38,7 +38,12 @@ namespace GerenciaTaller.Models
 			this.nombre = _nombre;
 		}
 
-		public int GetCodigo()
+        public Producto(int _codigo)
+        {
+            this.codigo = _codigo;
+        }
+
+        public int GetCodigo()
 		{
 			return this.codigo;
 		}
@@ -123,11 +128,13 @@ namespace GerenciaTaller.Models
 				dataBase.AgregarBitacora("BitacoraBorradoProductos", this.codigo.ToString());
 		}
 
-		public bool Actualizar(string nombreNuevo, string descripcionNueva, int precio)
+		public bool Actualizar(string nombre, string descripcion, int precio, int cantidad)
 		{
 			DataBase.Query dataBase = new DataBase.Query();
-			string update = "update Producto set nombre = '" + nombreNuevo + "', descripcion = '" + descripcionNueva + "', precio = " + precio.ToString() + " where codigo = " + this.codigo;
-			return dataBase.Actualizar(update);
+			string updateProducto = "update Producto set nombre = '" + nombre + "', descripcion = '" + descripcion +
+                "', precio = " + precio.ToString() + " where codigo = " + this.codigo;
+            string updateInventario = "update Inventario set cantidad = " + cantidad + " where codigoProducto = " + this.codigo;
+			return dataBase.Actualizar(updateProducto) && dataBase.Actualizar(updateInventario);
 		}
 
 		public bool ActualizarInventario(int cantidadNueva)
@@ -136,5 +143,5 @@ namespace GerenciaTaller.Models
 			string update = "update Inventario set cantidad = " + cantidadNueva + " where codigoProducto = " + this.codigo;
 			return dataBase.Actualizar(update);
 		}
-	}
+    }
 }
