@@ -32,7 +32,12 @@ namespace GerenciaTaller.Models
 			this.nombre = _nombre;
 		}
 
-		public int GetCodigo()
+        public Servicio(int _codigo)
+        {
+            this.codigo = _codigo;
+        }
+
+        public int GetCodigo()
 		{
 			return this.codigo;
 		}
@@ -108,10 +113,11 @@ namespace GerenciaTaller.Models
 				dataBase.AgregarBitacora("BitacoraBorradoServicios", this.codigo.ToString());
 		}
 
-		public bool Actualizar(string nombreNuevo, string descripcionNueva, int precio)
+		public bool Actualizar(string nombre, string descripcion, int precio)
 		{
 			DataBase.Query dataBase = new DataBase.Query();
-			string update = "update Servicios set nombre = '" + nombreNuevo + "', descripcion = '" + descripcionNueva + "', precio = " + precio.ToString() + " where codigo = " + this.codigo;
+			string update = "update Servicios set nombre = '" + nombre + "', descripcion = '" + descripcion + "', precio = " + 
+                precio.ToString() + " where codigo = " + this.codigo;
 			return dataBase.Actualizar(update);
 		}
 	}

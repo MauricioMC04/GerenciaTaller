@@ -86,10 +86,10 @@ namespace GerenciaTaller.Models
 				dataBase.AgregarBitacora("BitacoraBorradoFamilias", "'" + this.nombre + "'");
 		}
 
-		public bool Actualizar(string descripcionNueva)
+		public bool Actualizar(string descripcion)
 		{
 			DataBase.Query dataBase = new DataBase.Query();
-			string update = "update Familias set descripcion = '" + descripcionNueva + "' where nombre = '" + this.nombre + "'";
+			string update = "update Familias set descripcion = '" + descripcion + "' where nombre = '" + this.nombre + "'";
 			return dataBase.Actualizar(update);
 		}
 	}
