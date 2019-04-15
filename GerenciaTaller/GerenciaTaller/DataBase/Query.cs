@@ -155,6 +155,7 @@ namespace GerenciaTaller.DataBase
 			}
 			return lista;
 		}
+
 		public List<Familia> ConsultarFamilias(string select)
 		{
 			MySqlConnection databaseConnection = new MySqlConnection(connectionString);
@@ -307,6 +308,161 @@ namespace GerenciaTaller.DataBase
 				}
 			}
 			return lista;
+		}
+
+		public List<OrdenDeCompra> ConsultarOrdenes(string select)
+		{
+			MySqlConnection databaseConnection = new MySqlConnection(connectionString);
+			MySqlCommand commandDatabase = new MySqlCommand(select, databaseConnection);
+			commandDatabase.CommandTimeout = timeOut;
+			List<OrdenDeCompra> lista = new List<OrdenDeCompra>();
+			try
+			{
+				databaseConnection.Open();
+				MySqlDataReader reader = commandDatabase.ExecuteReader();
+				if (reader != null)
+				{
+					if (reader.HasRows)
+					{
+						while (reader.Read())
+						{
+							lista.Add(new OrdenDeCompra(reader.GetInt32(0), new Usuario(reader.GetInt32(1)), 
+								new Vehiculo(reader.GetInt32(2)), reader.GetString(3), 
+								this.ConsultarProductosPorOrden(reader.GetInt32(0)), 
+								this.ConsultarServiciosPorOrden(reader.GetInt32(0)), reader.GetInt32(4), 
+								reader.GetDateTime(5)));
+						}
+					}
+				}
+				databaseConnection.Close();
+			}
+			catch (Exception ex)
+			{
+				databaseConnection.Close();
+			}
+			return lista;
+		}
+
+		private List<Producto> ConsultarProductosPorOrden(int codigoOrden)
+		{
+			MySqlConnection databaseConnection = new MySqlConnection(connectionString);
+			string select = "Select * from ProductosPorOrdenDeCompra where codigoOrden = " + codigoOrden;
+			MySqlCommand commandDatabase = new MySqlCommand(select, databaseConnection);
+			commandDatabase.CommandTimeout = timeOut;
+			List<Producto> lista = new List<Producto>();
+			try
+			{
+				databaseConnection.Open();
+				MySqlDataReader reader = commandDatabase.ExecuteReader();
+				if (reader != null)
+				{
+					if (reader.HasRows)
+					{
+						while (reader.Read())
+						{
+							lista.Add(this.ConsultarProductoPorCodigo(reader.GetInt32(1)));
+						}
+					}
+				}
+				databaseConnection.Close();
+			}
+			catch (Exception ex)
+			{
+				databaseConnection.Close();
+			}
+			return lista;
+		}
+
+		private Producto ConsultarProductoPorCodigo(int codigo)
+		{
+			MySqlConnection databaseConnection = new MySqlConnection(connectionString);
+			string select = "Select * from Producto where codigo = " + codigo;
+			MySqlCommand commandDatabase = new MySqlCommand(select, databaseConnection);
+			commandDatabase.CommandTimeout = timeOut;
+			Producto producto = new Producto();
+			try
+			{
+				databaseConnection.Open();
+				MySqlDataReader reader = commandDatabase.ExecuteReader();
+				if (reader != null)
+				{
+					if (reader.HasRows)
+					{
+						while (reader.Read())
+						{
+							producto = new Producto(reader.GetInt32(0), reader.GetString(1),
+								reader.GetString(2), reader.GetInt32(3), new Categoria(reader.GetString(4)),
+								reader.GetBoolean(5), this.ConsultarInventario(reader.GetInt32(0)));
+						}
+					}
+				}
+				databaseConnection.Close();
+			}
+			catch (Exception ex)
+			{
+				databaseConnection.Close();
+			}
+			return producto;
+		}
+
+		private List<Servicio> ConsultarServiciosPorOrden(int codigoOrden)
+		{
+			MySqlConnection databaseConnection = new MySqlConnection(connectionString);
+			string select = "Select * from ServiciosPorOrdenDeCompra where codigoOrden = " + codigoOrden;
+			MySqlCommand commandDatabase = new MySqlCommand(select, databaseConnection);
+			commandDatabase.CommandTimeout = timeOut;
+			List<Servicio> lista = new List<Servicio>();
+			try
+			{
+				databaseConnection.Open();
+				MySqlDataReader reader = commandDatabase.ExecuteReader();
+				if (reader != null)
+				{
+					if (reader.HasRows)
+					{
+						while (reader.Read())
+						{
+							lista.Add(this.ConsultarServicioPorCodigo(reader.GetInt32(1)));
+						}
+					}
+				}
+				databaseConnection.Close();
+			}
+			catch (Exception ex)
+			{
+				databaseConnection.Close();
+			}
+			return lista;
+		}
+
+		private Servicio ConsultarServicioPorCodigo(int codigo)
+		{
+			MySqlConnection databaseConnection = new MySqlConnection(connectionString);
+			string select = "Select * from Servicios where codigo = " + codigo;
+ 			MySqlCommand commandDatabase = new MySqlCommand(select, databaseConnection);
+			commandDatabase.CommandTimeout = timeOut;
+			Servicio servicio = new Servicio();
+			try
+			{
+				databaseConnection.Open();
+				MySqlDataReader reader = commandDatabase.ExecuteReader();
+				if (reader != null)
+				{
+					if (reader.HasRows)
+					{
+						while (reader.Read())
+						{
+							servicio = new Servicio(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetInt32(3), reader.GetBoolean(4));
+						}
+					}
+				}
+				databaseConnection.Close();
+			}
+			catch (Exception ex)
+			{
+				databaseConnection.Close();
+			}
+			return servicio;
 		}
 	}
 }
