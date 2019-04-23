@@ -18,94 +18,98 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="~/Content/Familia.css">
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/Familia.js"></script>
 
 
 
-    <style>
-        #myInput {
-            float: left;
-            margin-right: 60px;
-        }
-    </style>
 
-    @*<style>
-        p {
-            display: inline-block;
-            width: 100px;
-        }
-    </style>*@
 
 
 </head>
 <div>
     <body>
 
+
         <div class="container">
             <div>
                 <input class="form-control" id="myInput" type="text" placeholder="Search..">
-                <button class="btn btn-primary  dropdown-toggle" type="button" data-toggle="dropdown">
-                    Dropdown Example
-                    <span class="caret"></span>
-                </button>
-
             </div>
             <br>
-           
 
-                
-                @foreach (GerenciaTaller.Models.Familia familia in Model.GetFamilias())
-                {
-                    <div class="alert-info">
+            <p>
+                <button class="btn btn-primary"  type="button" onclick="location.href='@Url.Action("FamiliasAgregar", "Home")';return false;">Agregar Familias</button>
+            </p>
+            <br>
 
 
-                        <p><strong>Nombre: </strong>@familia.GetNombre()</p>
-                        <p><strong>Descripcion: </strong>@familia.GetDescripcion()</p>
 
-                     
-
+            @foreach (GerenciaTaller.Models.Familia familia in Model.GetFamilias())
+            {
+            <div class="alert-info">
+                <div class="info">
+                    <p><strong>Nombre: </strong>@familia.GetNombre()</p>
+                    <p><strong>Descripcion: </strong>@familia.GetDescripcion()</p>
+                </div>
+                <div class="infoButtons">
+                    
                         @Html.ActionLink("Eliminar", "FamiliaEliminar", new { nombre = familia.GetNombre() })
+                    
+                        <br /> <br />
+                        <button type="button" class="btn btn-primary" id=@("btn" + familia.GetNombre().Replace(" ", "")) onclick="MostrarEditForm('@familia.GetNombre().Replace(" ", "")')">Editar</button>
                     </div>
+                </div>
+
+                <div class="edit" id=@("editForm" + familia.GetNombre().Replace(" ", "")) align="center">
                     <hr />
-
-
-
-
-                                    @*<div class="alert-info">
-                            <p><strong>Nombre: </strong>@familia.GetNombre()</p>
-                            <p><strong>Descripcion: </strong>@familia.GetDescripcion()</p>
-                            <HR size="10" width="70%" align="left">*@
-                   
+                    <div class="editForm">
+                        <form action="../Home/FamiliaEditar" method="POST" id=@("form" + familia.GetNombre().Replace(" ", ""))>
+                            <div class="form-group">
+                                <label for="txtNombre">Nombre</label>
+                                <input class="form-control" id="txtNombre" name="txtNombre" type="text" value="@familia.GetNombre()" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="txtDescripcion">Descripcion</label>
+                                <input class="form-control input-lg" id=@("txtDescripcion" + familia.GetNombre().Replace(" ", "")) name="txtDescripcion" type="text" value="@familia.GetDescripcion()">
+                            </div>
+                            <button type="button" class="btn btn-primary" onclick="Editar('@familia.GetNombre().Replace(" ", "")');return false;">Editar</button>
+                        </form>
+                    </div>
+                </div>
+                <br />
+                <hr />
                 }
-                
 
-      
+                @*<a class="btn btn-primary" href="#" role="button">Agregar</a>*@
+            </div>
 
-            <a class="btn btn-primary" href="#" role="button">Agregar</a>
-        </div>
-
-        <script>
-            $(document).ready(function () {
-                $("#myInput").on("keyup", function () {
-                    var value = $(this).val().toLowerCase();
-                    $("#myTable tr").filter(function () {
-                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            @*<script>
+                $(document).ready(function () {
+                    $("#myInput").on("keyup", function () {
+                        var value = $(this).val().toLowerCase();
+                        $("#myTable tr").filter(function () {
+                            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                        });
                     });
                 });
-            });
-        </script>
+            </script>
 
-        <script>
-            $(document).ready(function () {
-                $("#myInput").on("keyup", function () {
-                    var value = $(this).val().toLowerCase();
-                    $(".dropdown-menu li").filter(function () {
-                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            <script>
+                $(document).ready(function () {
+                    $("#myInput").on("keyup", function () {
+                        var value = $(this).val().toLowerCase();
+                        $(".dropdown-menu li").filter(function () {
+                            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                        });
                     });
-                });
-            });
-        </script>
+                });*@
+            @*</script>*@
+            @*<div class="alert-info">
+            <p><strong>Nombre: </strong>@familia.GetNombre()</p>
+            <p><strong>Descripcion: </strong>@familia.GetDescripcion()</p>
+            <HR size="10" width="70%" align="left">*@
 
-
-    </body>
+        </body>
 </div>
 </html>

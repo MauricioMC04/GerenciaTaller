@@ -9,7 +9,7 @@
     text-align: center;
 }
 
-.alert-info{
+.alert-info {
     position: relative;
     float: left;
     width: 100%;
@@ -25,9 +25,7 @@ br {
 
 .edit {
     width: 100%;
-    
     display: none;
-    
 }
 
 .editForm {
@@ -48,12 +46,3 @@ br {
         color: white;
     }
 
-select {
-    background: transparent;
-    border: 2px solid #3d3d29;
-    font-size: 14px;
-    height: 30px;
-    padding: 5px;
-    width: 250px;
-    background-color: #b8b894;
-}

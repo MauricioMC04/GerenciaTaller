@@ -238,11 +238,13 @@ namespace GerenciaTaller.Controllers
         {
             try
             {
-                Models.Familia familia = new Models.Familia(form["txtNombre"]);
-                familia.Actualizar(form["txtDescripcion"]);
+                Models.Familia familiaEditar = new Models.Familia(form["txtNombre"]);
+                familiaEditar.Actualizar(form["txtDescripcion"]);
             }
             catch { }
-            return View("Familias");
+            Familia familia = new Familia();
+            Consulta consulta = new Consulta(familia.ConsultarDataBase());
+            return View("Familia", consulta);
         }
     }
 }
