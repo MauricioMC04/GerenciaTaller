@@ -24,6 +24,24 @@ namespace GerenciaTaller.Controllers
 			ViewBag.Message = "Your application description page.";
 			return View();
 		}
+
+        public ActionResult OrdenServicio()
+        {
+            List<string> l1 = new List<string>();
+            Producto prod = new Producto();
+            Servicio ser = new Servicio();
+            foreach (Producto item in prod.ConsultarDataBase())
+            {
+                l1.Add(item.GetNombre());
+            }
+            foreach (Servicio item in ser.ConsultarDataBase())
+            {
+                l1.Add(item.GetNombre());
+            }
+
+            return View(l1);
+        }
+
         public ActionResult Familia()
         {
             ViewBag.Message = "Your application description page.";

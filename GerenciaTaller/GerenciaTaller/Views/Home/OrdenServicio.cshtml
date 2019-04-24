@@ -1,0 +1,61 @@
+﻿@model IEnumerable<String>
+@{
+    DateTime fecha = DateTime.Now;
+}
+@{
+    ViewBag.Title = "OrdenServicio";
+}
+
+<h2>Orden de Servicio</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <label for="txtCod">Usuario</label>
+            <input class="form-control" id="txtCod" name="txtUser" type="text" value="">
+            <label for="txtCod">Vehiculo</label>
+            <input class="form-control" id="txtCod" name="txtCar" type="text" value="">
+        </div>
+        <div class="form-group">
+            <label for="txtCod">Descripcion</label>
+            <input class="form-control" id="txtCod" name="txtDesc" type="text" value="">
+        </div>
+        <h4>Productos y servicios</h4>
+        <div style="overflow:auto">
+            @{
+                foreach (string item in Model)
+                {
+                    <input type="checkbox"> <label>@item</label>
+                    <br />
+                }
+            }
+        </div>
+        <div class="form-group">
+            <label for="txtCod">Total</label>
+            <input class="form-control" id="txtCod" name="txtDesc" type="text" value="">
+        </div>
+
+        <div class="form-group">
+            <label for="txtCod">@fecha</label>
+        </div>
+
+        <div class="form-group">
+
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Crear orden de servicio" class="btn btn-default" />
+            </div>
+        </div>
+
+    </div>
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
