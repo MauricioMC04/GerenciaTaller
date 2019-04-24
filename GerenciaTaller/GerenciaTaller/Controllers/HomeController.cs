@@ -146,16 +146,14 @@ namespace GerenciaTaller.Controllers
         public ActionResult Producto()
         {
             Models.Producto prod = new Producto();
-            List<Models.Producto> list= prod.ConsultarDataBase();
-            var model = list;
+            Consulta model = new Consulta(prod.ConsultarDataBase());
             return View(model);
         }
         //muestra la ventana 
         public ActionResult Servicio()
         {
-            Models.Servicio ser = new Servicio();
-            List<Models.Servicio> list = ser.ConsultarDataBase();
-            var model = list;
+            Models.Servicio serv = new Servicio();
+            Consulta model = new Consulta(serv.ConsultarDataBase());
             return View(model);
         }
 
@@ -196,29 +194,32 @@ namespace GerenciaTaller.Controllers
             return RedirectToAction("Categoria");
         }
 
-        [HttpPost]
         public ActionResult ProductosEditar(FormCollection form)
         {
             try
             {
-                Models.Producto producto = new Producto(int.Parse(form["txtCodigo"]));
-                producto.Actualizar(form["txtNombre"], form["txtDescripcion"], 
-                    int.Parse(form["txtPrecio"]), int.Parse(form["txtCantidad"]));
+                Models.Producto productoEditar = new Models.Producto(Convert.ToInt32(form["txtCodigo"]));
+                productoEditar.Actualizar(form["txtNombre"], form["txtDescripcion"], Convert.ToInt32(form["txtPrecio"]), Convert.ToInt32(form["Cantidad"]));
             }
-            catch {}
-            return RedirectToAction("Producto");
-        }
+            catch { }
 
-        [HttpPost]
+            Producto producto = new Producto();
+            Consulta consulta = new Consulta(producto.ConsultarDataBase());
+            return View("Producto", consulta);
+        }
+        
         public ActionResult ServiciosEditar(FormCollection form)
         {
             try
             {
-                Models.Servicio servicio = new Servicio(int.Parse(form["txtCod"]));
-                servicio.Actualizar(form["txtNombre"], form["txtDescripcion"], int.Parse(form["txtPrecio"]));
+                Models.Servicio serviciosEditar = new Models.Servicio(Convert.ToInt32(form["txtCodigo"]));
+                serviciosEditar.Actualizar(form["txtNombre"], form["txtDescripcion"], Convert.ToInt32(form["txtPrecio"]));
             }
-            catch {}
-            return RedirectToAction("Servicio");
+            catch { }
+
+            Servicio servicio = new Servicio();
+            Consulta consulta = new Consulta(servicio.ConsultarDataBase());
+            return View("Servicio", consulta);
         }
 
         public ActionResult CategoriaEditar(FormCollection form)

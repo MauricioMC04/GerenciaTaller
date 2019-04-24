@@ -36,7 +36,7 @@ br {
     position: relative;
 }
 
-.btn {
+/*.btn {
     color: #3d3d29;
     background: transparent;
     border: 2px solid #3d3d29;
@@ -46,7 +46,7 @@ br {
     .btn:hover {
         background-color: #b8b894;
         color: white;
-    }
+    }*/
 
 select {
     background: transparent;

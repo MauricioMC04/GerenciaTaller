@@ -1,4 +1,6 @@
-﻿@model IEnumerable<GerenciaTaller.Models.Servicio>
+﻿@*@model IEnumerable<GerenciaTaller.Models.Servicio>*@
+@using GerenciaTaller.Models
+@model GerenciaTaller.Models.Consulta
 
 @{
     ViewBag.Title = "Servicio";
@@ -6,17 +8,63 @@
 
 <h2>Servicio</h2>
 
+
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="~/Content/Servicios.css">
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/Servicio.js"></script>
+
 <p>
-    @Html.ActionLink("Agregar Servicio", "ServiciosAgregar")
+    <button class="btn btn-default" type="button" onclick="location.href='@Url.Action("ServiciosAgregar", "Home")';return false;">Agregar Servicios</button>
 </p>
-@foreach (GerenciaTaller.Models.Servicio item in Model)
+
+
+@foreach (GerenciaTaller.Models.Servicio servicio in Model.GetServicio())
 {
-    <div class="alert-info">
-        <p><strong>Código: </strong>@item.GetCodigo()</p>
-        <p><strong>Nombre: </strong>@item.GetNombre()</p>
-        <p><strong>Descripcion: </strong>@item.GetDescripcion()</p>
-        <p><strong>Precio: </strong>@item.GetPrecio()</p>
-        @Html.ActionLink("Eliminar", "ServicioEliminar", new { id=item.GetCodigo() })
+<div class="alert-info">
+    <div class="info">
+        <p><strong>Código: </strong>@servicio.GetCodigo()</p>
+        <p><strong>Nombre: </strong>@servicio.GetNombre()</p>
+        <p><strong>Descripcion: </strong>@servicio.GetDescripcion()</p>
+        <p><strong>Precio: </strong>@servicio.GetPrecio()</p>
     </div>
+        <div class="infoButtons">
+            @Html.ActionLink("Eliminar", "ServicioEliminar", new { codigo = servicio.GetCodigo() })
+            <br /> <br />
+            <button type="button" class="btn btn-default" id=@("btn" + servicio.GetCodigo()) onclick="MostrarEditForm('@servicio.GetCodigo()')">Editar</button>
+        </div>
+    </div>
+
+
+    <div class="edit" id=@("editForm" + servicio.GetCodigo()) align="center">
+        <hr />
+        <div class="editForm">
+            <form action="../Home/ServiciosEditar" method="POST" id=@("form" + servicio.GetCodigo())>
+                <div class="form-group">
+                    <label for="txtCodigo">Codigo</label>
+                    <input class="form-control" id="txtCodigo" name="txtCodigo" type="text" value="@servicio.GetCodigo()" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="txtNombre">Nombre</label>
+                    <input class="form-control" id="txtNombre" name="txtNombre" type="text" value="@servicio.GetNombre()">
+                </div>
+                <div class="form-group">
+                    <label for="txtDescripcion">Descripcion</label>
+                    <input class="form-control input-lg" id=@("txtDescripcion" + servicio.GetCodigo()) name="txtDescripcion" type="text" value="@servicio.GetDescripcion()">
+                </div>
+                <div class="form-group">
+                    <label for="txtPrecio">Precio</label>
+                    <input class="form-control input-lg" id=@("txtPrecio" + servicio.GetCodigo()) name="txtPrecio" type="text" value="@servicio.GetPrecio()">
+                </div>
+                <button type="button" class="btn btn-default" onclick="Editar('@servicio.GetCodigo()');return false;">Editar</button>
+            </form>
+        </div>
+    </div>
+    <br />
     <hr />
-}
+    }

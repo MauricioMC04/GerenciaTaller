@@ -33,6 +33,15 @@ br {
     background-color: #0094ff;
     position: relative;
 }
+select {
+    background: transparent;
+    border: 2px solid #3d3d29;
+    font-size: 14px;
+    height: 30px;
+    padding: 5px;
+    width: 250px;
+    background-color: #b8b894;
+}
 
 /*.btn {
     color: #3d3d29;
@@ -45,4 +54,3 @@ br {
         background-color: #b8b894;
         color: white;
     }*/
-

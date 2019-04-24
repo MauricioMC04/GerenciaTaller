@@ -38,7 +38,7 @@
             <br>
 
             <p>
-                <button class="btn btn-primary" type="button" onclick="location.href='@Url.Action("CategoriasAgregar", "Home")';return false;">Agregar Categoria</button>
+                <button  class="btn btn-default" type="button" onclick="location.href='@Url.Action("CategoriasAgregar", "Home")';return false;">Agregar Categoria</button>
             </p>          
             @foreach (GerenciaTaller.Models.Categoria categoria in Model.GetCategorias())
             {
@@ -51,7 +51,7 @@
                     <div class="infoButtons">
                         @Html.ActionLink("Eliminar", "CategoriaEliminar", new { nombre = categoria.GetNombre() })
                         <br /> <br />
-                        <button class="btn btn-primary" id=@("btn" + categoria.GetNombre().Replace(" ", "")) onclick="MostrarEditForm('@categoria.GetNombre().Replace(" ", "")')">Editar</button>
+                        <button  class="btn btn-default" id=@("btn" + categoria.GetNombre().Replace(" ", "")) onclick="MostrarEditForm('@categoria.GetNombre().Replace(" ", "")')">Editar</button>
                     </div>
                 </div>
                 <div class="edit" id=@("editForm" + categoria.GetNombre().Replace(" ", "")) align="center">
@@ -66,7 +66,7 @@
                                 <label for="txtDescripcion">Descripcion</label>
                                 <input class="form-control input-lg" id=@("txtDescripcion" + categoria.GetNombre().Replace(" ", "")) name="txtDescripcion" type="text" value="@categoria.GetDescripcion()">
                             </div>
-                            <button type="button" class="btn btn-primary" onclick="Editar('@categoria.GetNombre().Replace(" ", "")')">Editar</button>
+                            <button type="button"  class="btn btn-default" onclick="Editar('@categoria.GetNombre().Replace(" ", "")')">Editar</button>
                         </form>
                     </div>
                 </div>

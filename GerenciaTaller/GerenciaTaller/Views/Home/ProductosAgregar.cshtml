@@ -6,12 +6,12 @@
 
 <h2>Agregar Productos</h2>
 
+<link rel="stylesheet" href="~/Content/Producto.css">
 
 @using (Html.BeginForm())
 {
 
     <div class="form-horizontal">
-        <h4>Producto nuevo</h4>
         <select name="cmbCategorias">
             @{
                 foreach (GerenciaTaller.Models.Categoria item in Model)

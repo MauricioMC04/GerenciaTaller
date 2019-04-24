@@ -224,6 +224,8 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Categoria.css" />
     <Content Include="Content\Familia.css" />
+    <Content Include="Content\Producto.css" />
+    <Content Include="Content\Servicios.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -246,6 +248,8 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\Producto.js" />
+    <Content Include="Scripts\Servicio.js" />
     <Content Include="Scripts\Validaciones.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">

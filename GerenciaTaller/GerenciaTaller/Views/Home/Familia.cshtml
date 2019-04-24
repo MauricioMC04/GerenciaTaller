@@ -22,42 +22,31 @@
     <script src="~/Scripts/jquery-3.3.1.min.js"></script>
     <script src="~/Scripts/Familia.js"></script>
 
-
-
-
-
-
 </head>
 <div>
     <body>
-
-
         <div class="container">
             <div>
                 <input class="form-control" id="myInput" type="text" placeholder="Search..">
             </div>
             <br>
-
             <p>
-                <button class="btn btn-primary"  type="button" onclick="location.href='@Url.Action("FamiliasAgregar", "Home")';return false;">Agregar Familias</button>
+                <button  class="btn btn-default" type="button" onclick="location.href='@Url.Action("FamiliasAgregar", "Home")';return false;">Agregar Familias</button>
             </p>
             <br>
-
-
-
             @foreach (GerenciaTaller.Models.Familia familia in Model.GetFamilias())
             {
-            <div class="alert-info">
-                <div class="info">
-                    <p><strong>Nombre: </strong>@familia.GetNombre()</p>
-                    <p><strong>Descripcion: </strong>@familia.GetDescripcion()</p>
-                </div>
-                <div class="infoButtons">
-                    
+                <div class="alert-info">
+                    <div class="info">
+                        <p><strong>Nombre: </strong>@familia.GetNombre()</p>
+                        <p><strong>Descripcion: </strong>@familia.GetDescripcion()</p>
+                    </div>
+                    <div class="infoButtons">
+
                         @Html.ActionLink("Eliminar", "FamiliaEliminar", new { nombre = familia.GetNombre() })
-                    
+
                         <br /> <br />
-                        <button type="button" class="btn btn-primary" id=@("btn" + familia.GetNombre().Replace(" ", "")) onclick="MostrarEditForm('@familia.GetNombre().Replace(" ", "")')">Editar</button>
+                        <button type="button"  class="btn btn-default" id=@("btn" + familia.GetNombre().Replace(" ", "")) onclick="MostrarEditForm('@familia.GetNombre().Replace(" ", "")')">Editar</button>
                     </div>
                 </div>
 
@@ -73,18 +62,18 @@
                                 <label for="txtDescripcion">Descripcion</label>
                                 <input class="form-control input-lg" id=@("txtDescripcion" + familia.GetNombre().Replace(" ", "")) name="txtDescripcion" type="text" value="@familia.GetDescripcion()">
                             </div>
-                            <button type="button" class="btn btn-primary" onclick="Editar('@familia.GetNombre().Replace(" ", "")');return false;">Editar</button>
+                            <button type="button"  class="btn btn-default" onclick="Editar('@familia.GetNombre().Replace(" ", "")');return false;">Editar</button>
                         </form>
                     </div>
                 </div>
                 <br />
                 <hr />
-                }
+            }
 
-                @*<a class="btn btn-primary" href="#" role="button">Agregar</a>*@
-            </div>
+            @*<a class="btn btn-primary" href="#" role="button">Agregar</a>*@
+        </div>
 
-            @*<script>
+        @*<script>
                 $(document).ready(function () {
                     $("#myInput").on("keyup", function () {
                         var value = $(this).val().toLowerCase();
@@ -104,12 +93,12 @@
                         });
                     });
                 });*@
-            @*</script>*@
-            @*<div class="alert-info">
+        @*</script>*@
+        @*<div class="alert-info">
             <p><strong>Nombre: </strong>@familia.GetNombre()</p>
             <p><strong>Descripcion: </strong>@familia.GetDescripcion()</p>
             <HR size="10" width="70%" align="left">*@
 
-        </body>
+    </body>
 </div>
 </html>

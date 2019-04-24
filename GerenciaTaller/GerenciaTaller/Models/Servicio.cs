@@ -120,5 +120,6 @@ namespace GerenciaTaller.Models
                 precio.ToString() + " where codigo = " + this.codigo;
 			return dataBase.Actualizar(update);
 		}
-	}
+
+    }
 }

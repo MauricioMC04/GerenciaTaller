@@ -1,4 +1,6 @@
-﻿@model IEnumerable<GerenciaTaller.Models.Producto>
+﻿@*@model IEnumerable<GerenciaTaller.Models.Producto>*@
+@using GerenciaTaller.Models
+@model GerenciaTaller.Models.Consulta
 
 @{
     ViewBag.Title = "Producto";
@@ -6,21 +8,62 @@
 
 <h2>Producto</h2>
 
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="~/Content/Producto.css">
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/Producto.js"></script>
+
 <p>
-    @Html.ActionLink("Agregar Producto", "ProductosAgregar")
+    <button class="btn btn-default" type="button" onclick="location.href='@Url.Action("ProductosAgregar", "Home")';return false;">Agregar Productos</button>
 </p>
 
 
-@foreach (GerenciaTaller.Models.Producto item in Model)
+@foreach (GerenciaTaller.Models.Producto producto in Model.GetProductos())
 {
     <div class="alert-info">
-        
-        <p><strong>Código: </strong>@item.GetCodigo()</p>
-        <p><strong>Nombre: </strong>@item.GetNombre()</p>
-        <p><strong>Descripcion: </strong>@item.GetDescripcion()</p>
-        <p><strong>Categoria: </strong>@item.GetCategoria().GetNombre()</p>
-        <p><strong>Precio: </strong>@item.GetPrecio()</p>
-        @Html.ActionLink("Eliminar", "ProductoEliminar", new { id=item.GetCodigo() })
+        <div class="info">
+            <p><strong>Código: </strong>@producto.GetCodigo()</p>
+            <p><strong>Nombre: </strong>@producto.GetNombre()</p>
+            <p><strong>Descripcion: </strong>@producto.GetDescripcion()</p>
+            <p><strong>Categoria: </strong>@producto.GetCategoria().GetNombre()</p>
+            <p><strong>Precio: </strong>@producto.GetPrecio()</p>
+        </div>
+
+        <div class="infoButtons">
+            @Html.ActionLink("Eliminar", "ProductoEliminar", new { codigo = producto.GetCodigo() })
+            <br /> <br />
+            <button type="button" class="btn btn-default" id=@("btn" + producto.GetCodigo()) onclick="MostrarEditForm('@producto.GetCodigo()')">Editar</button>
+        </div>
     </div>
+
+    <div class="edit" id=@("editForm" + producto.GetCodigo()) align="center">
+        <hr />
+        <div class="editForm">
+            <form action="../Home/ProductosEditar" method="POST" id=@("form" + producto.GetCodigo())>
+                <div class="form-group">
+                    <label for="txtCodigo">Codigo</label>
+                    <input class="form-control" id="txtCodigo" name="txtCodigo" type="text" value="@producto.GetCodigo()" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="txtNombre">Nombre</label>
+                    <input class="form-control" id="txtNombre" name="txtNombre" type="text" value="@producto.GetNombre()">
+                </div>
+                <div class="form-group">
+                    <label for="txtDescripcion">Descripcion</label>
+                    <input class="form-control input-lg" id=@("txtDescripcion" + producto.GetCodigo()) name="txtDescripcion" type="text" value="@producto.GetDescripcion()">
+                </div>
+                <div class="form-group">
+                    <label for="txtDescripcion">Precio</label>
+                    <input class="form-control input-lg" id=@("txtPrecio" + producto.GetCodigo()) name="txtPrecio" type="text" value="@producto.GetPrecio()">
+                </div>
+                <button type="button" class="btn btn-default" onclick="Editar('@producto.GetCodigo()');return false;">Editar</button>
+            </form>
+        </div>
+    </div>
+    <br />
     <hr />
 }

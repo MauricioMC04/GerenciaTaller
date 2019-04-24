@@ -37,5 +37,33 @@ namespace GerenciaTaller.Models
         {
             return this.categorias;
         }
+
+        private List<Producto> productos;
+
+
+
+        public Consulta(List<Producto> _productos)
+        {
+            this.productos = _productos;
+        }
+
+        public List<Producto> GetProductos()
+        {
+            return this.productos;
+        }
+
+        private List<Servicio> servicio;
+
+
+
+        public Consulta(List<Servicio> _servicio)
+        {
+            this.servicio = _servicio;
+        }
+
+        public List<Servicio> GetServicio()
+        {
+            return this.servicio;
+        }
     }
 }
