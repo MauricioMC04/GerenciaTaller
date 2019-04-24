@@ -49,9 +49,10 @@
                         <p><strong>Familia: </strong>@categoria.GetFamilia().GetNombre()</p>
                     </div>
                     <div class="infoButtons">
-                        @Html.ActionLink("Eliminar", "CategoriaEliminar", new { nombre = categoria.GetNombre() })
+                       
+                        <button class="btn btn-default" type="button" onclick="location.href='@Url.Action("CategoriaEliminar", "Home", new { nombre = categoria.GetNombre() })';return false;">Eliminar</button>
                         <br /> <br />
-                        <button  class="btn btn-default" id=@("btn" + categoria.GetNombre().Replace(" ", "")) onclick="MostrarEditForm('@categoria.GetNombre().Replace(" ", "")')">Editar</button>
+                        <button class="btn btn-default" id=@("btn" + categoria.GetNombre().Replace(" ", "")) onclick="MostrarEditForm('@categoria.GetNombre().Replace(" ", "")')">Editar</button>
                     </div>
                 </div>
                 <div class="edit" id=@("editForm" + categoria.GetNombre().Replace(" ", "")) align="center">

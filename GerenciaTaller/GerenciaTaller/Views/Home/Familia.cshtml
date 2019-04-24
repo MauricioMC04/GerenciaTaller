@@ -42,11 +42,9 @@
                         <p><strong>Descripcion: </strong>@familia.GetDescripcion()</p>
                     </div>
                     <div class="infoButtons">
-
-                        @Html.ActionLink("Eliminar", "FamiliaEliminar", new { nombre = familia.GetNombre() })
-
+                        <button class="btn btn-default" type="button" onclick="location.href='@Url.Action("FamiliaEliminar", "Home", new { nombre = familia.GetNombre() })';return false;">Eliminar</button>
                         <br /> <br />
-                        <button type="button"  class="btn btn-default" id=@("btn" + familia.GetNombre().Replace(" ", "")) onclick="MostrarEditForm('@familia.GetNombre().Replace(" ", "")')">Editar</button>
+                        <button type="button" class="btn btn-default" id=@("btn" + familia.GetNombre().Replace(" ", "")) onclick="MostrarEditForm('@familia.GetNombre().Replace(" ", "")')">Editar</button>
                     </div>
                 </div>
 

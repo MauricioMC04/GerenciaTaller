@@ -33,11 +33,14 @@
         <p><strong>Descripcion: </strong>@servicio.GetDescripcion()</p>
         <p><strong>Precio: </strong>@servicio.GetPrecio()</p>
     </div>
-        <div class="infoButtons">
-            @Html.ActionLink("Eliminar", "ServicioEliminar", new { codigo = servicio.GetCodigo() })
-            <br /> <br />
-            <button type="button" class="btn btn-default" id=@("btn" + servicio.GetCodigo()) onclick="MostrarEditForm('@servicio.GetCodigo()')">Editar</button>
-        </div>
+    <div class="infoButtons">
+      
+
+        <button class="btn btn-default" type="button" onclick="location.href='@Url.Action("ServicioEliminar", "Home", new { codigo = servicio.GetCodigo() })';return false;">Eliminar</button>
+
+        <br /> <br />
+        <button type="button" class="btn btn-default" id=@("btn" + servicio.GetCodigo()) onclick="MostrarEditForm('@servicio.GetCodigo()')">Editar</button>
+    </div>
     </div>
 
 
